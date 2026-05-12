@@ -534,3 +534,28 @@ a:hover { text-decoration: underline; }
   .gauge-wrap  { width: 170px; }
   .gauge-svg   { width: 170px; }
 }
+
+/* ── INTERSTITIAL AD ── */
+.interstitial-backdrop {
+  position: fixed; inset: 0;
+  background: var(--bg-0);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+.interstitial-backdrop[hidden] { display: none; }
+.interstitial-content {
+  width: 100%; max-width: 500px;
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 16px;
+  text-align: center;
+}
+.interstitial-header {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.interstitial-countdown {
+  color: var(--accent); font-weight: 700;
+  font-family: var(--font-mono); font-size: 16px;
+}

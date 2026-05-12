@@ -56,9 +56,12 @@ const DOM = {
   btnCopyResult:    $('btnCopyResult'),
   btnNewAnalysis:   $('btnNewAnalysis'),
 
-  // Modals
+  // Modals & Ads
   setupModal:       $('setupModal'),
   loginModal:       $('loginModal'),
+  interstitialAd:   $('interstitialAd'),
+  adCountdown:      $('adCountdown'),
+  btnSkipAd:        $('btnSkipAd'),
   modalApiKeyInput: $('modalApiKeyInput'),
   modalPinInputs:   null,
   loginPinInputs:   null,
@@ -191,7 +194,7 @@ async function runEvaluation() {
       summary: result.summary_line,
     });
 
-    renderResults(result, false);
+    showInterstitial(result, false);
   } catch (err) {
     hideLoading();
     showError(err.message);
@@ -217,7 +220,7 @@ function runDemo() {
       biases_detected: ['FOMO', 'No Stop Loss'],
       summary_line: 'TSLA largo FOMO sin stop 245$',
     };
-    renderResults(demo, true);
+    showInterstitial(demo, true);
   }, 1200);
 }
 
@@ -400,6 +403,36 @@ function hideLoading() {
   const sub = $('loadingSub');
   if (sub._interval) clearInterval(sub._interval);
   hide(DOM.loadingSection);
+}
+
+/* ── Interstitial Ad ─────────────────────────── */
+function showInterstitial(result, isDemo) {
+  hideLoading();
+  hide(DOM.setupSection);
+  hide(DOM.heroSection);
+  show(DOM.interstitialAd);
+
+  let timeLeft = 5;
+  DOM.adCountdown.textContent = `0${timeLeft}`;
+  DOM.btnSkipAd.textContent = 'Espera...';
+  DOM.btnSkipAd.disabled = true;
+
+  const interval = setInterval(() => {
+    timeLeft--;
+    DOM.adCountdown.textContent = `0${timeLeft}`;
+    if (timeLeft <= 0) {
+      clearInterval(interval);
+      DOM.btnSkipAd.disabled = false;
+      DOM.btnSkipAd.textContent = 'Continuar al análisis →';
+    }
+  }, 1000);
+
+  DOM.btnSkipAd.onclick = () => {
+    if (timeLeft > 0) return;
+    clearInterval(interval);
+    hide(DOM.interstitialAd);
+    renderResults(result, isDemo);
+  };
 }
 
 /* ── Error Toast ─────────────────────────────── */

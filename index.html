@@ -192,8 +192,16 @@
 
       <!-- Ad square (below verdict, highest attention) -->
       <div class="ad-square">
-        <!-- AdSense 300×250 -->
-        [Anuncio cuadrado]
+        <!-- INSERTA AQUÍ TU SCRIPT DE GOOGLE ADSENSE -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2977545376736575"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
       </div>
 
       <!-- Dimensions -->
@@ -350,6 +358,47 @@
         <button class="btn-ghost btn-full" onclick="closeLoginModal()">Cancelar</button>
         <button class="btn-primary btn-full" id="btnUnlock">Desbloquear</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ══ BOTTOM AD BANNER ═════════════════════════════════════════════════ -->
+  <div class="container">
+    <div class="ad-banner">
+      <!-- INSERTA AQUÍ TU SCRIPT DE GOOGLE ADSENSE -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2977545376736575"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </div>
+
+  <!-- ══ MODAL: Interstitial Ad ═══════════════════════════════════════════ -->
+  <div class="interstitial-backdrop" id="interstitialAd" hidden>
+    <div class="interstitial-content">
+      <div class="interstitial-header">
+        <span>Publicidad</span>
+        <span class="interstitial-countdown" id="adCountdown">05</span>
+      </div>
+      <div class="ad-square" style="margin:0; background:var(--bg-1);">
+        <!-- INSERTA AQUÍ TU SCRIPT DE GOOGLE ADSENSE -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2977545376736575"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+      <button class="btn-ghost btn-full" id="btnSkipAd" style="margin-top:8px" disabled>
+        Espera...
+      </button>
     </div>
   </div>
 
