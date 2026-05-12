@@ -23,13 +23,10 @@ const DOM = {
   resultsSection:   $('resultsSection'),
   historySection:   $('historySection'),
   historyGrid:      $('historyGrid'),
-  historyEmpty:     $('historyEmpty'),
-
   // Key status bar
-  keyStatusBar:     $('keyStatusBar'),
   keyStatusDot:     $('keyStatusDot'),
   keyStatusLabel:   $('keyStatusLabel'),
-  btnChangeKey:     $('btnChangeKey'),
+  btnOpenSetup:     $('btnOpenSetup'),
   btnClearKey:      $('btnClearKey'),
 
   // Setup form
@@ -90,20 +87,17 @@ function updateKeyStatus() {
     State.apiKey = Storage.getUnlockedKey();
     DOM.keyStatusDot.className = 'status-dot active';
     DOM.keyStatusLabel.textContent = 'API Key loaded';
-    show(DOM.keyStatusBar);
     DOM.btnEvaluate.disabled = !DOM.tradeText?.value?.trim();
   } else if (Storage.hasStoredKey()) {
     State.apiKey = null;
     DOM.keyStatusDot.className = 'status-dot';
-    DOM.keyStatusLabel.textContent = 'Key saved — enter PIN to activate';
-    show(DOM.keyStatusBar);
+    DOM.keyStatusLabel.textContent = 'Key saved — unlock';
     DOM.btnEvaluate.disabled = true;
     openLoginModal();
   } else {
     State.apiKey = null;
     DOM.keyStatusDot.className = 'status-dot error';
     DOM.keyStatusLabel.textContent = 'No API Key';
-    show(DOM.keyStatusBar);
     DOM.btnEvaluate.disabled = true;
   }
 }
@@ -124,8 +118,10 @@ function bindEvents() {
   // Buttons
   DOM.btnEvaluate?.addEventListener('click', runEvaluation);
   DOM.btnDemo?.addEventListener('click', runDemo);
-  DOM.btnOpenSetup?.addEventListener('click', () => openSetupModal());
-  DOM.btnChangeKey?.addEventListener('click', () => openSetupModal());
+  DOM.btnOpenSetup?.addEventListener('click', () => {
+    if (Storage.hasStoredKey() && !Storage.isUnlocked()) openLoginModal();
+    else openSetupModal();
+  });
   DOM.btnClearKey?.addEventListener('click', clearKey);
   DOM.btnSaveKey?.addEventListener('click', saveKey);
   DOM.btnUnlock?.addEventListener('click', unlockKey);
@@ -456,10 +452,11 @@ function showError(msg) {
 
 /* ── Modal: Setup API Key ────────────────────── */
 function openSetupModal() {
-  DOM.setupModal.hidden = false;
-  DOM.modalApiKeyInput.value = '';
   DOM.modalError.textContent = '';
-  DOM.modalPinInputs.forEach(p => p.value = '');
+  DOM.modalApiKeyInput.value = '';
+  document.querySelectorAll('#setupModal .pin-input').forEach(i => i.value = '');
+  DOM.btnClearKey.style.display = Storage.hasStoredKey() ? 'block' : 'none';
+  show(DOM.setupModal);
   setTimeout(() => DOM.modalApiKeyInput.focus(), 50);
 }
 
@@ -510,9 +507,10 @@ function unlockKey() {
 }
 
 function clearKey() {
-  if (!confirm('Delete saved key? You will need to enter it again.')) return;
+  if (!confirm('Are you sure you want to delete your saved API Key? You will need to enter it again.')) return;
   Storage.clearKey();
   State.apiKey = null;
+  closeSetupModal();
   updateKeyStatus();
 }
 
