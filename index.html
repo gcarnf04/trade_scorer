@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trade Setup Scorer — ¿Es tu operación lógica o emocional?</title>
+  <meta name="description" content="Evalúa cualquier setup de trading con IA antes de ejecutarlo. Detecta FOMO, revenge trading y errores de gestión de riesgo en segundos. Gratis, privado, sin servidores." />
+  <meta property="og:title" content="Trade Setup Scorer" />
+  <meta property="og:description" content="Tu auditor de IA implacable antes de pulsar 'Comprar'." />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'><circle cx='14' cy='14' r='12' stroke='%23ef4444' stroke-width='2'/><path d='M8 16 L11 12 L14 14 L17 9 L20 13' stroke='%23ef4444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><circle cx='20' cy='13' r='2' fill='%23ef4444'/></svg>" type="image/svg+xml">
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2977545376736575" crossorigin="anonymous"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ══ HEADER ══════════════════════════════════════════════════════════ -->
+  <header class="app-header">
+    <div class="container">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="12" stroke="#ef4444" stroke-width="2"/>
+          <path d="M8 16 L11 12 L14 14 L17 9 L20 13" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="20" cy="13" r="2" fill="#ef4444"/>
+        </svg>
+        <span class="logo-text">Trade Setup Scorer</span>
+        <span class="logo-badge">Beta</span>
+      </div>
+      <div class="header-right">
+        <a href="https://gcarnf04.github.io/" class="back-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Inicio
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ AD BANNER ═══════════════════════════════════════════════════════ -->
+  <div class="container">
+    <div class="ad-banner" id="adBannerTop">
+      <!-- AdSense Banner 728×90 -->
+      [Anuncio superior]
+    </div>
+  </div>
+
+  <!-- ══ MAIN ════════════════════════════════════════════════════════════ -->
+  <main class="app-main">
+
+    <!-- ─ HERO ──────────────────────────────────────────────────────────── -->
+    <section class="hero container" id="heroSection">
+      <div class="hero-badge">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+        Auditor de Trading con IA
+      </div>
+      <h1 class="hero-title">
+        ¿Es tu operación lógica<br>o un <span class="highlight">impulso emocional</span>?
+      </h1>
+      <p class="hero-sub">
+        Describe tu próximo trade. La IA lo evaluará como un jefe de riesgos implacable antes de que pierdas dinero.
+      </p>
+      <div class="hero-pills">
+        <span class="pill">🔒 Tu clave nunca sale de tu navegador</span>
+        <span class="pill">⚡ Resultados en segundos</span>
+        <span class="pill">🧠 Detecta FOMO y revenge trading</span>
+        <span class="pill">📊 Historial local</span>
+      </div>
+    </section>
+
+    <!-- ─ SETUP FORM ─────────────────────────────────────────────────────── -->
+    <section class="container setup-section" id="setupSection">
+
+      <!-- Key status bar -->
+      <div class="key-status-bar" id="keyStatusBar" hidden>
+        <div class="status-dot" id="keyStatusDot"></div>
+        <span id="keyStatusLabel">Sin API Key</span>
+        <div class="key-status-actions">
+          <button class="btn-ghost btn-sm" id="btnChangeKey">Cambiar clave</button>
+          <button class="btn-ghost btn-sm btn-danger" id="btnClearKey">Borrar</button>
+        </div>
+      </div>
+
+      <div class="setup-card">
+        <div class="setup-card-header">
+          <div class="setup-card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Describe tu setup
+          </div>
+          <div class="rr-badge" id="rrBadge">R:R —</div>
+        </div>
+
+        <div class="form-group">
+          <textarea class="textarea-field" id="tradeText" rows="5" maxlength="2000"
+            placeholder="Ej: Voy a entrar largo en EURUSD en 1.0850. El precio ha roto una resistencia clave y el RSI está en sobrecompra... pero no quiero quedarme fuera de este movimiento."
+          ></textarea>
+          <div class="char-count" id="charCount">0/2000</div>
+        </div>
+
+        <div class="form-group">
+          <div class="numeric-inputs">
+            <div>
+              <label class="form-label">Precio entrada</label>
+              <input class="input-field" id="entryPrice" type="number" step="any" placeholder="1.0850" />
+            </div>
+            <div>
+              <label class="form-label">Stop Loss</label>
+              <input class="input-field" id="stopLoss" type="number" step="any" placeholder="1.0800" />
+            </div>
+            <div>
+              <label class="form-label">Take Profit</label>
+              <input class="input-field" id="takeProfit" type="number" step="any" placeholder="1.0950" />
+            </div>
+          </div>
+          <p class="form-hint">Opcional — calcula el R:R automáticamente y se incluye en el análisis.</p>
+        </div>
+
+        <div class="setup-actions">
+          <button class="btn-primary btn-lg" id="btnEvaluate" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Evaluar Setup
+          </button>
+          <button class="btn-secondary" id="btnDemo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg>
+            Ver demo
+          </button>
+          <button class="btn-ghost" id="btnOpenSetup">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            API Key
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─ LOADING ─────────────────────────────────────────────────────────── -->
+    <section class="container loading-section" id="loadingSection" hidden>
+      <div class="loading-card">
+        <div class="loading-orb"></div>
+        <div>
+          <div class="loading-status" id="loadingStatus">Auditando tu gestión de riesgo...</div>
+          <div class="loading-sub" id="loadingSub">Detectando sesgos emocionales...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─ RESULTS ─────────────────────────────────────────────────────────── -->
+    <section class="container results-section" id="resultsSection" hidden>
+
+      <!-- Demo badge -->
+      <div style="text-align:center; margin-bottom: 12px;" id="demoRibbon" hidden>
+        <span class="demo-ribbon">✦ Análisis de demostración</span>
+      </div>
+
+      <!-- Score -->
+      <div class="score-block">
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 200 110" id="gaugeSvg">
+            <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#1e2a3a" stroke-width="16" stroke-linecap="round"/>
+            <path id="gaugeFill" d="M20 100 A80 80 0 0 1 180 100"
+              fill="none" stroke="#ef4444" stroke-width="16" stroke-linecap="round"
+              stroke-dasharray="251.2" stroke-dashoffset="251.2"
+              style="transition: stroke-dashoffset .05s linear, stroke .3s ease;"/>
+          </svg>
+          <div class="gauge-center">
+            <span class="gauge-score" id="gaugeScore">0</span>
+            <span class="gauge-label">/ 100</span>
+          </div>
+        </div>
+        <div class="score-grade red" id="scoreGrade">—</div>
+      </div>
+
+      <!-- Verdict -->
+      <div class="verdict-card">
+        <div class="verdict-header">
+          <div class="verdict-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Veredicto del Risk Manager
+          </div>
+        </div>
+        <div class="verdict-body" id="verdictText"></div>
+      </div>
+
+      <!-- Ad square (below verdict, highest attention) -->
+      <div class="ad-square">
+        <!-- AdSense 300×250 -->
+        [Anuncio cuadrado]
+      </div>
+
+      <!-- Dimensions -->
+      <div class="dimensions-card">
+        <div class="dimensions-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Desglose por dimensión
+        </div>
+        <div class="dimension-row">
+          <div class="dimension-header">
+            <span class="dimension-name">Gestión de Riesgo</span>
+            <span class="dimension-val" id="dimRisk">—</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill red" id="dimRiskBar" style="width:0"></div></div>
+        </div>
+        <div class="dimension-row">
+          <div class="dimension-header">
+            <span class="dimension-name">Control Emocional</span>
+            <span class="dimension-val" id="dimEmotion">—</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill red" id="dimEmotionBar" style="width:0"></div></div>
+        </div>
+        <div class="dimension-row">
+          <div class="dimension-header">
+            <span class="dimension-name">Confluencia Técnica</span>
+            <span class="dimension-val" id="dimTech">—</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill red" id="dimTechBar" style="width:0"></div></div>
+        </div>
+        <div class="dimension-row">
+          <div class="dimension-header">
+            <span class="dimension-name">Contexto de Mercado</span>
+            <span class="dimension-val" id="dimContext">—</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill red" id="dimContextBar" style="width:0"></div></div>
+        </div>
+      </div>
+
+      <!-- Interrogation -->
+      <div class="interrogation-card">
+        <div class="interrogation-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Preguntas incómodas
+        </div>
+        <ul class="interrogation-questions" id="questionsList"></ul>
+      </div>
+
+      <!-- Share -->
+      <div class="share-card">
+        <div class="share-text">¿Vas a saltarte el veredicto igualmente? <strong>Al menos compártelo.</strong></div>
+        <div class="share-actions">
+          <button class="btn-ghost" id="btnShareX" title="Compartir en X (Twitter)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.763l7.738-8.857L1.428 2.25H8.7l4.251 5.616zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Compartir en X
+          </button>
+          <button class="btn-ghost" id="btnShareIG" title="Copiar para Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+            Copiar para Instagram
+          </button>
+          <button class="btn-ghost" id="btnCopyResult">📋 Copiar análisis</button>
+          <button class="btn-secondary" id="btnNewAnalysis">← Nuevo setup</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─ HISTORY ─────────────────────────────────────────────────────────── -->
+    <section class="container history-section" id="historySection">
+      <div class="history-header">
+        <div class="section-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Historial de setups
+        </div>
+        <button class="btn-ghost btn-sm btn-danger" id="btnClearHistory">Borrar todo</button>
+      </div>
+
+      <div id="historyGrid" class="history-grid" hidden></div>
+
+      <div id="historyEmpty" class="history-empty" hidden>
+        Aún no has evaluado ningún setup. Tus análisis aparecerán aquí.
+      </div>
+
+      <div class="chart-card" style="margin-top: 16px;">
+        <div class="chart-title">Evolución de tu disciplina</div>
+        <canvas id="historyChart" width="700" height="120"></canvas>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ ERROR TOAST ══════════════════════════════════════════════════════ -->
+  <div id="errorToast" hidden style="
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: #1a0a0a; border: 1px solid rgba(239,68,68,.4); color: #ef4444;
+    padding: 12px 20px; border-radius: 10px; font-size: 14px; z-index: 500;
+    max-width: 90vw; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  "></div>
+
+  <!-- ══ MODAL: Setup API Key ═════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="setupModal" hidden>
+    <div class="modal">
+      <button class="modal-close" onclick="closeSetupModal()">✕</button>
+      <div class="modal-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div class="modal-title">Configura tu API Key de Gemini</div>
+      <div class="modal-desc">
+        Necesitas una <strong>clave de Gemini</strong> (empieza por <code>AIza</code>).<br>
+        La cifraremos con tu PIN y solo saldrá de tu dispositivo para llamar a Google.<br>
+        <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Obtén tu clave gratuita en Google AI Studio →</a>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Gemini API Key</label>
+        <div class="input-group">
+          <input class="input-field" type="password" id="modalApiKeyInput" placeholder="AIzaSy..." autocomplete="off" />
+          <button class="btn-icon" id="btnToggleApiKey" title="Mostrar / ocultar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Crea un PIN de 4 dígitos</label>
+        <div class="pin-inputs">
+          <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
+          <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
+          <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
+          <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
+        </div>
+        <p class="form-hint" style="text-align:center">Este PIN es el único que desbloquea tu clave. No lo olvides.</p>
+      </div>
+      <div id="modalError" style="color: #ef4444; font-size: 13px; min-height: 18px; text-align:center;"></div>
+      <div class="modal-actions">
+        <button class="btn-ghost btn-full" onclick="closeSetupModal()">Cancelar</button>
+        <button class="btn-primary btn-full" id="btnSaveKey">Guardar y activar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODAL: Login with PIN ════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="loginModal" hidden>
+    <div class="modal" style="text-align:center;">
+      <div class="modal-icon" style="margin: 0 auto 20px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div class="modal-title">Introduce tu PIN</div>
+      <div class="modal-desc">Tienes una clave guardada. Desbloquéala con tu PIN.</div>
+      <div class="pin-inputs" style="justify-content:center; margin: 16px 0;">
+        <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
+        <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
+        <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
+        <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
+      </div>
+      <div id="loginError" style="color: #ef4444; font-size: 13px; min-height: 18px;"></div>
+      <div class="modal-actions" style="margin-top: 20px;">
+        <button class="btn-ghost btn-full" onclick="closeLoginModal()">Cancelar</button>
+        <button class="btn-primary btn-full" id="btnUnlock">Desbloquear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER / DISCLAIMER ══════════════════════════════════════════════ -->
+  <footer class="disclaimer">
+    <p>
+      <strong>⚠ Aviso Legal:</strong> Trade Setup Scorer es una herramienta de simulación educativa basada en inteligencia artificial.
+      No constituye asesoramiento financiero, de inversión ni recomendaciones de trading.
+      Operar en los mercados financieros conlleva un <strong>alto riesgo de pérdida de capital</strong>.
+      Los resultados pasados no garantizan resultados futuros.
+    </p>
+    <div class="disclaimer-links">
+      <a href="privacy.html">Política de Privacidad</a>
+      <a href="terms.html">Términos de Uso</a>
+      <a href="https://gcarnf04.github.io/">Más herramientas</a>
+    </div>
+  </footer>
+
+  <!-- ══ SCRIPTS ═══════════════════════════════════════════════════════════ -->
+  <script src="js/crypto-js.min.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/gemini-api.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
