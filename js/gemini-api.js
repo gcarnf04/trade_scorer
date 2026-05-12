@@ -41,7 +41,8 @@ Scoring criteria:
 
 Risk:Reward below 1:2 MUST lower risk_management by at least 20 points.
 FOMO language ("don't want to miss", "no quiero quedarme fuera", "está subiendo") MUST lower emotional_control below 50.
-Revenge trading language ("recuperar", "recover", "get back") MUST lower emotional_control below 30.`;
+Revenge trading language ("recuperar", "recover", "get back") MUST lower emotional_control below 30.
+RESPOND ENTIRELY IN ENGLISH.`;
 
   async function evaluate(traderText, rrRatio, apiKey) {
     let userContent = `TRADE SETUP TO EVALUATE:\n\n"${traderText}"`;
@@ -86,7 +87,7 @@ Revenge trading language ("recuperar", "recover", "get back") MUST lower emotion
     const data = await response.json();
     const raw  = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    if (!raw) throw new Error('Respuesta vacía de Gemini. Comprueba tu API Key.');
+    if (!raw) throw new Error('Empty response from Gemini. Check your API Key.');
 
     try {
       return JSON.parse(raw);
@@ -94,17 +95,17 @@ Revenge trading language ("recuperar", "recover", "get back") MUST lower emotion
       // Try to extract JSON from the text if Gemini added prose
       const match = raw.match(/\{[\s\S]*\}/);
       if (match) return JSON.parse(match[0]);
-      throw new Error('La respuesta de Gemini no tiene formato JSON válido.');
+      throw new Error('Gemini response is not valid JSON.');
     }
   }
 
   function categorizeError(status, msg) {
-    if (status === 400) return 'Clave de API inválida o solicitud incorrecta. Verifica tu Gemini API Key.';
-    if (status === 403) return 'Acceso denegado. Verifica que tu API Key de Gemini tiene permisos.';
-    if (status === 429) return 'Límite de peticiones alcanzado. Espera un momento e inténtalo de nuevo.';
-    if (status === 500) return 'Error del servidor de Google. Inténtalo en unos segundos.';
-    if (msg.toLowerCase().includes('quota')) return 'Cuota de la API agotada. Revisa tu cuenta en aistudio.google.com.';
-    return `Error de API: ${msg}`;
+    if (status === 400) return 'Invalid API Key or bad request. Verify your Gemini API Key.';
+    if (status === 403) return 'Access denied. Verify that your Gemini API Key has permissions.';
+    if (status === 429) return 'Rate limit reached. Wait a moment and try again.';
+    if (status === 500) return 'Google server error. Try again in a few seconds.';
+    if (msg.toLowerCase().includes('quota')) return 'API quota exceeded. Check your account at aistudio.google.com.';
+    return `API Error: ${msg}`;
   }
 
   return { evaluate };

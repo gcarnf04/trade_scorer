@@ -88,18 +88,18 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateKeyStatus() {
   if (State.apiKey) {
     DOM.keyStatusDot.className = 'status-dot active';
-    DOM.keyStatusLabel.textContent = 'API Key cargada';
+    DOM.keyStatusLabel.textContent = 'API Key loaded';
     show(DOM.keyStatusBar);
     DOM.btnEvaluate.disabled = !DOM.tradeText?.value?.trim();
   } else if (Storage.hasStoredKey()) {
     DOM.keyStatusDot.className = 'status-dot';
-    DOM.keyStatusLabel.textContent = 'Clave guardada — introduce tu PIN para activar';
+    DOM.keyStatusLabel.textContent = 'Key saved — enter PIN to activate';
     show(DOM.keyStatusBar);
     DOM.btnEvaluate.disabled = true;
     openLoginModal();
   } else {
     DOM.keyStatusDot.className = 'status-dot error';
-    DOM.keyStatusLabel.textContent = 'Sin API Key';
+    DOM.keyStatusLabel.textContent = 'No API Key';
     show(DOM.keyStatusBar);
     DOM.btnEvaluate.disabled = true;
   }
@@ -143,7 +143,7 @@ function bindEvents() {
 
   // History clear
   $('btnClearHistory')?.addEventListener('click', () => {
-    if (confirm('¿Borrar todo el historial?')) {
+    if (confirm('Clear entire history?')) {
       Storage.clearHistory();
       renderHistory();
     }
@@ -181,7 +181,7 @@ async function runEvaluation() {
   State.isDemo = false;
   const rr = recalcRR();
 
-  showLoading('Auditando tu gestión de riesgo...');
+  showLoading('Auditing risk management...');
 
   try {
     const result = await GeminiAPI.evaluate(text, rr, State.apiKey);
@@ -204,21 +204,21 @@ async function runEvaluation() {
 /* ── Demo Mode ───────────────────────────────── */
 function runDemo() {
   State.isDemo = true;
-  showLoading('Cargando análisis de ejemplo...');
+  showLoading('Loading example analysis...');
 
   setTimeout(() => {
     const demo = {
       score: 42,
       grade: 'HIGH RISK',
-      verdict: 'Entras long porque "no quieres quedarte fuera". Eso no es un análisis, es FOMO puro. No hay stop definido, el contexto macro es bajista y tu gestión de riesgo es inexistente. El mercado no te debe nada.',
+      verdict: 'You are going long because you "don\'t want to miss out". That\'s not an analysis, it\'s pure FOMO. There is no defined stop loss, the macro context is bearish, and your risk management is non-existent. The market owes you nothing.',
       dimensions: { risk_management: 18, emotional_control: 25, technical_confluence: 55, context_awareness: 48 },
       questions: [
-        '¿Habrías entrado en esta operación si hubiera cerrado ayer con beneficio o aún estás intentando recuperar pérdidas?',
-        '¿Dónde está tu stop loss y cuánto % de tu cuenta arriesgas exactamente?',
-        '¿Este setup cumple con tus reglas de trading escritas o estás improvisando?',
+        'Would you have taken this trade if you closed yesterday in profit, or are you just trying to recover losses?',
+        'Where is your stop loss and what exact % of your account are you risking?',
+        'Does this setup comply with your written trading rules, or are you improvising?',
       ],
       biases_detected: ['FOMO', 'No Stop Loss'],
-      summary_line: 'TSLA largo FOMO sin stop 245$',
+      summary_line: 'TSLA long FOMO without stop $245',
     };
     showInterstitial(demo, true);
   }, 1200);
@@ -308,21 +308,21 @@ function copyResult() {
   const r = State.lastResult?.result;
   if (!r) return;
   const text = [
-    `🎯 Trade Setup Scorer — Resultado`,
-    `Puntuación: ${r.score}/100 (${r.grade})`,
+    `🎯 Trade Setup Scorer — Result`,
+    `Score: ${r.score}/100 (${r.grade})`,
     ``,
-    `📋 Veredicto del Risk Manager:`,
+    `📋 Risk Manager's Verdict:`,
     r.verdict,
     ``,
-    `🔴 Preguntas incómodas:`,
+    `🔴 Uncomfortable Questions:`,
     ...(r.questions || []).map((q, i) => `${i + 1}. ${q}`),
     ``,
-    `🔗 Evalúa tu próximo trade: https://gcarnf04.github.io/trade_scorer/`,
+    `🔗 Evaluate your next trade: https://gcarnf04.github.io/trade_scorer/`,
   ].join('\n');
 
   navigator.clipboard.writeText(text).then(() => {
-    DOM.btnCopyResult.textContent = '✓ Copiado';
-    setTimeout(() => { DOM.btnCopyResult.textContent = '📋 Copiar análisis'; }, 2000);
+    DOM.btnCopyResult.textContent = '✓ Copied';
+    setTimeout(() => { DOM.btnCopyResult.textContent = '📋 Copy Analysis'; }, 2000);
   });
 }
 
@@ -331,9 +331,9 @@ function shareX() {
   const r = State.lastResult?.result;
   if (!r) return;
   const text = [
-    `🎯 Mi setup ha sacado ${r.score}/100 en Trade Setup Scorer.`,
-    r.score < 50 ? `La IA me ha pillado haciendo ${(r.biases_detected||['trading emocional']).join(' y ')} 💀` : `Veredicto: "${(r.verdict||'').slice(0,80)}..."`,
-    `¿Cuál es tu puntuación? 👇`,
+    `🎯 My setup scored ${r.score}/100 on Trade Setup Scorer.`,
+    r.score < 50 ? `The AI caught me doing ${(r.biases_detected||['emotional trading']).join(' and ')} 💀` : `Verdict: "${(r.verdict||'').slice(0,80)}..."`,
+    `What's your score? 👇`,
     `https://gcarnf04.github.io/trade_scorer/`,
   ].join('\n');
   const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
@@ -346,21 +346,21 @@ function shareInstagram() {
   if (!r) return;
   const text = [
     `🎯 TRADE SETUP SCORER`,
-    `Puntuación: ${r.score}/100 — ${r.grade}`,
+    `Score: ${r.score}/100 — ${r.grade}`,
     `▬`.repeat(Math.round(r.score / 10)) + `□`.repeat(10 - Math.round(r.score / 10)),
     ``,
-    `🔴 Veredicto:`,
+    `🔴 Verdict:`,
     `"${r.verdict || ''}"`,
     ``,
     `❓ ${(r.questions || []).slice(0, 2).join('\n❓ ')}`,
     ``,
-    `Evalúa tu próximo trade → gcarnf04.github.io/trade_scorer`,
+    `Evaluate your next trade → gcarnf04.github.io/trade_scorer`,
     `#Trading #RiskManagement #TradingPsychology #FOMO #Forex #Stocks`,
   ].join('\n');
   navigator.clipboard.writeText(text).then(() => {
     const btn = $('btnShareIG');
     const prev = btn.innerHTML;
-    btn.textContent = '✓ Copiado! Abre Instagram y pégalo';
+    btn.textContent = '✓ Copied! Open Instagram and paste';
     setTimeout(() => { btn.innerHTML = prev; }, 3000);
   });
 }
@@ -387,13 +387,13 @@ function showLoading(msg) {
   hide(DOM.heroSection);
   hide(DOM.resultsSection);
   show(DOM.loadingSection);
-  $('loadingStatus').textContent = msg || 'Analizando...';
+  $('loadingStatus').textContent = msg || 'Analyzing...';
   const sub = $('loadingSub');
   const msgs = [
-    'Detectando sesgos emocionales...',
-    'Evaluando gestión de riesgo...',
-    'Calculando ratio de disciplina...',
-    'Preparando veredicto...',
+    'Detecting emotional biases...',
+    'Evaluating risk management...',
+    'Calculating discipline ratio...',
+    'Preparing verdict...',
   ];
   let i = 0;
   sub._interval = setInterval(() => { sub.textContent = msgs[i++ % msgs.length]; }, 1400);
@@ -414,7 +414,7 @@ function showInterstitial(result, isDemo) {
 
   let timeLeft = 5;
   DOM.adCountdown.textContent = `0${timeLeft}`;
-  DOM.btnSkipAd.textContent = 'Espera...';
+  DOM.btnSkipAd.textContent = 'Wait...';
   DOM.btnSkipAd.disabled = true;
 
   const interval = setInterval(() => {
@@ -423,7 +423,7 @@ function showInterstitial(result, isDemo) {
     if (timeLeft <= 0) {
       clearInterval(interval);
       DOM.btnSkipAd.disabled = false;
-      DOM.btnSkipAd.textContent = 'Continuar al análisis →';
+      DOM.btnSkipAd.textContent = 'Continue to analysis →';
     }
   }, 1000);
 
@@ -461,14 +461,14 @@ function saveKey() {
   const pin = DOM.modalPinInputs.map(p => p.value).join('');
 
   if (!key.startsWith('AIza') || key.length < 30) {
-    DOM.modalError.textContent = 'La clave debe empezar por AIza (Gemini API Key)'; return;
+    DOM.modalError.textContent = 'Key must start with AIza (Gemini API Key)'; return;
   }
   if (pin.length !== 4) {
-    DOM.modalError.textContent = 'Introduce un PIN de 4 dígitos'; return;
+    DOM.modalError.textContent = 'Enter a 4-digit PIN'; return;
   }
 
   if (!Storage.saveKey(key, pin)) {
-    DOM.modalError.textContent = 'Error al cifrar la clave'; return;
+    DOM.modalError.textContent = 'Error encrypting the key'; return;
   }
 
   State.apiKey = key;
@@ -489,10 +489,10 @@ function closeLoginModal() { DOM.loginModal.hidden = true; }
 
 function unlockKey() {
   const pin = DOM.loginPinInputs.map(p => p.value).join('');
-  if (pin.length !== 4) { DOM.loginError.textContent = 'PIN incompleto'; return; }
+  if (pin.length !== 4) { DOM.loginError.textContent = 'Incomplete PIN'; return; }
 
   const key = Storage.loadKey(pin);
-  if (!key) { DOM.loginError.textContent = 'PIN incorrecto'; return; }
+  if (!key) { DOM.loginError.textContent = 'Incorrect PIN'; return; }
 
   State.apiKey = key;
   closeLoginModal();
@@ -501,7 +501,7 @@ function unlockKey() {
 }
 
 function clearKey() {
-  if (!confirm('¿Eliminar la clave guardada? Necesitarás introducirla de nuevo.')) return;
+  if (!confirm('Delete saved key? You will need to enter it again.')) return;
   Storage.clearKey();
   State.apiKey = null;
   updateKeyStatus();

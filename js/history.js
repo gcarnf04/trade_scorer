@@ -19,7 +19,7 @@ const History = (() => {
 
   function _itemHTML(entry) {
     const cls = _colorClass(entry.score);
-    const date = new Date(entry.id).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+    const date = new Date(entry.id).toLocaleDateString('en-US', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
     return `
       <div class="history-item" title="${_escape(entry.summary || entry.trade)}">
         <div class="history-score ${cls}">${entry.score}</div>

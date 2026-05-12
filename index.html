@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trade Setup Scorer — ¿Es tu operación lógica o emocional?</title>
-  <meta name="description" content="Evalúa cualquier setup de trading con IA antes de ejecutarlo. Detecta FOMO, revenge trading y errores de gestión de riesgo en segundos. Gratis, privado, sin servidores." />
+  <title>Trade Setup Scorer — Is your trade logical or emotional?</title>
+  <meta name="description" content="Evaluate any trading setup with AI before executing it. Detect FOMO, revenge trading, and risk management errors in seconds. Free, private, serverless." />
   <meta property="og:title" content="Trade Setup Scorer" />
-  <meta property="og:description" content="Tu auditor de IA implacable antes de pulsar 'Comprar'." />
+  <meta property="og:description" content="Your ruthless AI auditor before hitting 'Buy'." />
   <meta property="og:type" content="website" />
 
   <!-- Favicon -->
@@ -41,7 +41,7 @@
       <div class="header-right">
         <a href="https://gcarnf04.github.io/" class="back-link">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Inicio
+          Home
         </a>
       </div>
     </div>
@@ -51,7 +51,7 @@
   <div class="container">
     <div class="ad-banner" id="adBannerTop">
       <!-- AdSense Banner 728×90 -->
-      [Anuncio superior]
+      [Top Ad]
     </div>
   </div>
 
@@ -62,19 +62,19 @@
     <section class="hero container" id="heroSection">
       <div class="hero-badge">
         <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
-        Auditor de Trading con IA
+        AI Trading Auditor
       </div>
       <h1 class="hero-title">
-        ¿Es tu operación lógica<br>o un <span class="highlight">impulso emocional</span>?
+        Is your trade logical<br>or an <span class="highlight">emotional impulse</span>?
       </h1>
       <p class="hero-sub">
-        Describe tu próximo trade. La IA lo evaluará como un jefe de riesgos implacable antes de que pierdas dinero.
+        Describe your next trade. The AI will evaluate it as a ruthless risk manager before you lose money.
       </p>
       <div class="hero-pills">
-        <span class="pill">🔒 Tu clave nunca sale de tu navegador</span>
-        <span class="pill">⚡ Resultados en segundos</span>
-        <span class="pill">🧠 Detecta FOMO y revenge trading</span>
-        <span class="pill">📊 Historial local</span>
+        <span class="pill">🔒 Your key never leaves your browser</span>
+        <span class="pill">⚡ Results in seconds</span>
+        <span class="pill">🧠 Detects FOMO & revenge trading</span>
+        <span class="pill">📊 Local history</span>
       </div>
     </section>
 
@@ -84,10 +84,10 @@
       <!-- Key status bar -->
       <div class="key-status-bar" id="keyStatusBar" hidden>
         <div class="status-dot" id="keyStatusDot"></div>
-        <span id="keyStatusLabel">Sin API Key</span>
+        <span id="keyStatusLabel">No API Key</span>
         <div class="key-status-actions">
-          <button class="btn-ghost btn-sm" id="btnChangeKey">Cambiar clave</button>
-          <button class="btn-ghost btn-sm btn-danger" id="btnClearKey">Borrar</button>
+          <button class="btn-ghost btn-sm" id="btnChangeKey">Change Key</button>
+          <button class="btn-ghost btn-sm btn-danger" id="btnClearKey">Clear</button>
         </div>
       </div>
 
@@ -95,14 +95,14 @@
         <div class="setup-card-header">
           <div class="setup-card-title">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            Describe tu setup
+            Describe your setup
           </div>
           <div class="rr-badge" id="rrBadge">R:R —</div>
         </div>
 
         <div class="form-group">
           <textarea class="textarea-field" id="tradeText" rows="5" maxlength="2000"
-            placeholder="Ej: Voy a entrar largo en EURUSD en 1.0850. El precio ha roto una resistencia clave y el RSI está en sobrecompra... pero no quiero quedarme fuera de este movimiento."
+            placeholder="Ex: I'm going long on EURUSD at 1.0850. The price broke a key resistance and the RSI is overbought... but I don't want to miss this move."
           ></textarea>
           <div class="char-count" id="charCount">0/2000</div>
         </div>
@@ -110,7 +110,7 @@
         <div class="form-group">
           <div class="numeric-inputs">
             <div>
-              <label class="form-label">Precio entrada</label>
+              <label class="form-label">Entry Price</label>
               <input class="input-field" id="entryPrice" type="number" step="any" placeholder="1.0850" />
             </div>
             <div>
@@ -122,17 +122,17 @@
               <input class="input-field" id="takeProfit" type="number" step="any" placeholder="1.0950" />
             </div>
           </div>
-          <p class="form-hint">Opcional — calcula el R:R automáticamente y se incluye en el análisis.</p>
+          <p class="form-hint">Optional — calculates R:R automatically and includes it in the analysis.</p>
         </div>
 
         <div class="setup-actions">
           <button class="btn-primary btn-lg" id="btnEvaluate" disabled>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Evaluar Setup
+            Evaluate Setup
           </button>
           <button class="btn-secondary" id="btnDemo">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg>
-            Ver demo
+            View Demo
           </button>
           <button class="btn-ghost" id="btnOpenSetup">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -147,7 +147,7 @@
       <div class="loading-card">
         <div class="loading-orb"></div>
         <div>
-          <div class="loading-status" id="loadingStatus">Auditando tu gestión de riesgo...</div>
+          <div class="loading-status" id="loadingStatus">Auditing your risk management...</div>
           <div class="loading-sub" id="loadingSub">Detectando sesgos emocionales...</div>
         </div>
       </div>
@@ -158,7 +158,7 @@
 
       <!-- Demo badge -->
       <div style="text-align:center; margin-bottom: 12px;" id="demoRibbon" hidden>
-        <span class="demo-ribbon">✦ Análisis de demostración</span>
+        <span class="demo-ribbon">✦ Demo Analysis</span>
       </div>
 
       <!-- Score -->
@@ -184,7 +184,7 @@
         <div class="verdict-header">
           <div class="verdict-title">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Veredicto del Risk Manager
+            Risk Manager's Verdict
           </div>
         </div>
         <div class="verdict-body" id="verdictText"></div>
@@ -208,32 +208,32 @@
       <div class="dimensions-card">
         <div class="dimensions-title">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Desglose por dimensión
+          Dimension Breakdown
         </div>
         <div class="dimension-row">
           <div class="dimension-header">
-            <span class="dimension-name">Gestión de Riesgo</span>
+            <span class="dimension-name">Risk Management</span>
             <span class="dimension-val" id="dimRisk">—</span>
           </div>
           <div class="bar-track"><div class="bar-fill red" id="dimRiskBar" style="width:0"></div></div>
         </div>
         <div class="dimension-row">
           <div class="dimension-header">
-            <span class="dimension-name">Control Emocional</span>
+            <span class="dimension-name">Emotional Control</span>
             <span class="dimension-val" id="dimEmotion">—</span>
           </div>
           <div class="bar-track"><div class="bar-fill red" id="dimEmotionBar" style="width:0"></div></div>
         </div>
         <div class="dimension-row">
           <div class="dimension-header">
-            <span class="dimension-name">Confluencia Técnica</span>
+            <span class="dimension-name">Technical Confluence</span>
             <span class="dimension-val" id="dimTech">—</span>
           </div>
           <div class="bar-track"><div class="bar-fill red" id="dimTechBar" style="width:0"></div></div>
         </div>
         <div class="dimension-row">
           <div class="dimension-header">
-            <span class="dimension-name">Contexto de Mercado</span>
+            <span class="dimension-name">Market Context</span>
             <span class="dimension-val" id="dimContext">—</span>
           </div>
           <div class="bar-track"><div class="bar-fill red" id="dimContextBar" style="width:0"></div></div>
@@ -244,25 +244,25 @@
       <div class="interrogation-card">
         <div class="interrogation-title">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Preguntas incómodas
+          Uncomfortable Questions
         </div>
         <ul class="interrogation-questions" id="questionsList"></ul>
       </div>
 
       <!-- Share -->
       <div class="share-card">
-        <div class="share-text">¿Vas a saltarte el veredicto igualmente? <strong>Al menos compártelo.</strong></div>
+        <div class="share-text">Going to ignore the verdict anyway? <strong>At least share it.</strong></div>
         <div class="share-actions">
           <button class="btn-ghost" id="btnShareX" title="Compartir en X (Twitter)">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.763l7.738-8.857L1.428 2.25H8.7l4.251 5.616zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            Compartir en X
+            Share on X
           </button>
           <button class="btn-ghost" id="btnShareIG" title="Copiar para Instagram">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-            Copiar para Instagram
+            Copy for Instagram
           </button>
-          <button class="btn-ghost" id="btnCopyResult">📋 Copiar análisis</button>
-          <button class="btn-secondary" id="btnNewAnalysis">← Nuevo setup</button>
+          <button class="btn-ghost" id="btnCopyResult">📋 Copy Analysis</button>
+          <button class="btn-secondary" id="btnNewAnalysis">← New Setup</button>
         </div>
       </div>
     </section>
@@ -272,19 +272,19 @@
       <div class="history-header">
         <div class="section-title">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Historial de setups
+          Setup History
         </div>
-        <button class="btn-ghost btn-sm btn-danger" id="btnClearHistory">Borrar todo</button>
+        <button class="btn-ghost btn-sm btn-danger" id="btnClearHistory">Clear All</button>
       </div>
 
       <div id="historyGrid" class="history-grid" hidden></div>
 
       <div id="historyEmpty" class="history-empty" hidden>
-        Aún no has evaluado ningún setup. Tus análisis aparecerán aquí.
+        You haven't evaluated any setups yet. Your analyses will appear here.
       </div>
 
       <div class="chart-card" style="margin-top: 16px;">
-        <div class="chart-title">Evolución de tu disciplina</div>
+        <div class="chart-title">Discipline Evolution</div>
         <canvas id="historyChart" width="700" height="120"></canvas>
       </div>
     </section>
@@ -306,35 +306,35 @@
       <div class="modal-icon">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </div>
-      <div class="modal-title">Configura tu API Key de Gemini</div>
+      <div class="modal-title">Set up your Gemini API Key</div>
       <div class="modal-desc">
-        Necesitas una <strong>clave de Gemini</strong> (empieza por <code>AIza</code>).<br>
-        La cifraremos con tu PIN y solo saldrá de tu dispositivo para llamar a Google.<br>
-        <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Obtén tu clave gratuita en Google AI Studio →</a>
+        You need a <strong>Gemini Key</strong> (starts with <code>AIza</code>).<br>
+        We'll encrypt it with your PIN. It only leaves your device to call Google.<br>
+        <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Get your free key at Google AI Studio →</a>
       </div>
       <div class="form-group">
         <label class="form-label">Gemini API Key</label>
         <div class="input-group">
           <input class="input-field" type="password" id="modalApiKeyInput" placeholder="AIzaSy..." autocomplete="off" />
-          <button class="btn-icon" id="btnToggleApiKey" title="Mostrar / ocultar">
+          <button class="btn-icon" id="btnToggleApiKey" title="Show / hide">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Crea un PIN de 4 dígitos</label>
+        <label class="form-label">Create a 4-digit PIN</label>
         <div class="pin-inputs">
           <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
           <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
           <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
           <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
         </div>
-        <p class="form-hint" style="text-align:center">Este PIN es el único que desbloquea tu clave. No lo olvides.</p>
+        <p class="form-hint" style="text-align:center">This PIN is the only way to unlock your key. Don't forget it.</p>
       </div>
       <div id="modalError" style="color: #ef4444; font-size: 13px; min-height: 18px; text-align:center;"></div>
       <div class="modal-actions">
-        <button class="btn-ghost btn-full" onclick="closeSetupModal()">Cancelar</button>
-        <button class="btn-primary btn-full" id="btnSaveKey">Guardar y activar</button>
+        <button class="btn-ghost btn-full" onclick="closeSetupModal()">Cancel</button>
+        <button class="btn-primary btn-full" id="btnSaveKey">Save & Activate</button>
       </div>
     </div>
   </div>
@@ -345,8 +345,8 @@
       <div class="modal-icon" style="margin: 0 auto 20px;">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </div>
-      <div class="modal-title">Introduce tu PIN</div>
-      <div class="modal-desc">Tienes una clave guardada. Desbloquéala con tu PIN.</div>
+      <div class="modal-title">Enter your PIN</div>
+      <div class="modal-desc">You have a saved key. Unlock it with your PIN.</div>
       <div class="pin-inputs" style="justify-content:center; margin: 16px 0;">
         <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
         <input class="pin-input" type="text" inputmode="numeric" maxlength="1" />
@@ -355,8 +355,8 @@
       </div>
       <div id="loginError" style="color: #ef4444; font-size: 13px; min-height: 18px;"></div>
       <div class="modal-actions" style="margin-top: 20px;">
-        <button class="btn-ghost btn-full" onclick="closeLoginModal()">Cancelar</button>
-        <button class="btn-primary btn-full" id="btnUnlock">Desbloquear</button>
+        <button class="btn-ghost btn-full" onclick="closeLoginModal()">Cancel</button>
+        <button class="btn-primary btn-full" id="btnUnlock">Unlock</button>
       </div>
     </div>
   </div>
@@ -381,7 +381,7 @@
   <div class="interstitial-backdrop" id="interstitialAd" hidden>
     <div class="interstitial-content">
       <div class="interstitial-header">
-        <span>Publicidad</span>
+        <span>Advertisement</span>
         <span class="interstitial-countdown" id="adCountdown">05</span>
       </div>
       <div class="ad-square" style="margin:0; background:var(--bg-1);">
@@ -397,7 +397,7 @@
         </script>
       </div>
       <button class="btn-ghost btn-full" id="btnSkipAd" style="margin-top:8px" disabled>
-        Espera...
+        Wait...
       </button>
     </div>
   </div>
@@ -405,15 +405,15 @@
   <!-- ══ FOOTER / DISCLAIMER ══════════════════════════════════════════════ -->
   <footer class="disclaimer">
     <p>
-      <strong>⚠ Aviso Legal:</strong> Trade Setup Scorer es una herramienta de simulación educativa basada en inteligencia artificial.
-      No constituye asesoramiento financiero, de inversión ni recomendaciones de trading.
-      Operar en los mercados financieros conlleva un <strong>alto riesgo de pérdida de capital</strong>.
-      Los resultados pasados no garantizan resultados futuros.
+      <strong>⚠ Legal Disclaimer:</strong> Trade Setup Scorer is an educational AI-based simulation tool.
+      It does not constitute financial, investment, or trading advice.
+      Trading in financial markets carries a <strong>high risk of capital loss</strong>.
+      Past performance does not guarantee future results.
     </p>
     <div class="disclaimer-links">
-      <a href="privacy.html">Política de Privacidad</a>
-      <a href="terms.html">Términos de Uso</a>
-      <a href="https://gcarnf04.github.io/">Más herramientas</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="https://gcarnf04.github.io/">More Tools</a>
     </div>
   </footer>
 
