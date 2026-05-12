@@ -86,18 +86,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* ── API Key Status ──────────────────────────── */
 function updateKeyStatus() {
-  if (State.apiKey) {
+  if (Storage.isUnlocked()) {
+    State.apiKey = Storage.getUnlockedKey();
     DOM.keyStatusDot.className = 'status-dot active';
     DOM.keyStatusLabel.textContent = 'API Key loaded';
     show(DOM.keyStatusBar);
     DOM.btnEvaluate.disabled = !DOM.tradeText?.value?.trim();
   } else if (Storage.hasStoredKey()) {
+    State.apiKey = null;
     DOM.keyStatusDot.className = 'status-dot';
     DOM.keyStatusLabel.textContent = 'Key saved — enter PIN to activate';
     show(DOM.keyStatusBar);
     DOM.btnEvaluate.disabled = true;
     openLoginModal();
   } else {
+    State.apiKey = null;
     DOM.keyStatusDot.className = 'status-dot error';
     DOM.keyStatusLabel.textContent = 'No API Key';
     show(DOM.keyStatusBar);
@@ -139,6 +142,12 @@ function bindEvents() {
   $('btnToggleApiKey')?.addEventListener('click', () => {
     const inp = DOM.modalApiKeyInput;
     inp.type = inp.type === 'password' ? 'text' : 'password';
+  });
+
+  // Re-check vault unlock explicitly if the user clicked the key status bar (optional)
+  DOM.keyStatusBar?.addEventListener('click', () => {
+    if (Storage.hasStoredKey() && !Storage.isUnlocked()) openLoginModal();
+    else if (!Storage.hasStoredKey()) openSetupModal();
   });
 
   // History clear

@@ -6,7 +6,8 @@
  */
 
 const Storage = (() => {
-  const STORAGE_KEY = 'tss_encrypted_key';
+  const STORAGE_KEY = 'vault_gemini_key_v1';
+  const SESSION_KEY = 'vault_unlocked_key_v1';
   const HISTORY_KEY = 'tss_history';
   const HISTORY_LIMIT = 20;
 
@@ -16,10 +17,19 @@ const Storage = (() => {
     return !!localStorage.getItem(STORAGE_KEY);
   }
 
+  function isUnlocked() {
+    return !!sessionStorage.getItem(SESSION_KEY);
+  }
+
+  function getUnlockedKey() {
+    return sessionStorage.getItem(SESSION_KEY);
+  }
+
   function saveKey(apiKey, pin) {
     try {
       const encrypted = CryptoJS.AES.encrypt(apiKey, _pinToPassphrase(pin)).toString();
       localStorage.setItem(STORAGE_KEY, encrypted);
+      sessionStorage.setItem(SESSION_KEY, apiKey);
       return true;
     } catch (e) {
       console.error('Encryption error:', e);
@@ -34,6 +44,7 @@ const Storage = (() => {
       const bytes  = CryptoJS.AES.decrypt(cipher, _pinToPassphrase(pin));
       const result = bytes.toString(CryptoJS.enc.Utf8);
       if (!result || result.length < 20) return null; // Wrong PIN
+      sessionStorage.setItem(SESSION_KEY, result);
       return result;
     } catch (e) {
       return null;
@@ -42,11 +53,12 @@ const Storage = (() => {
 
   function clearKey() {
     localStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(SESSION_KEY);
   }
 
   function _pinToPassphrase(pin) {
     // Stretch PIN with a static salt so brute-force is harder
-    return `tss::${pin}::2025::v1`;
+    return `vault::${pin}::2026::v1`;
   }
 
   /* ── History Management ─────────────────────── */
@@ -70,5 +82,5 @@ const Storage = (() => {
     localStorage.removeItem(HISTORY_KEY);
   }
 
-  return { hasStoredKey, saveKey, loadKey, clearKey, saveEntry, getHistory, clearHistory };
+  return { hasStoredKey, isUnlocked, getUnlockedKey, saveKey, loadKey, clearKey, saveEntry, getHistory, clearHistory };
 })();
