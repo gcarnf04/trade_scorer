@@ -199,7 +199,7 @@ async function runEvaluation() {
       summary: result.summary_line,
     });
 
-    showInterstitial(result, false);
+    renderResults(result, false);
   } catch (err) {
     hideLoading();
     showError(err.message);
@@ -225,7 +225,7 @@ function runDemo() {
       biases_detected: ['FOMO', 'No Stop Loss'],
       summary_line: 'TSLA long FOMO without stop $245',
     };
-    showInterstitial(demo, true);
+    renderResults(demo, true);
   }, 1200);
 }
 
@@ -410,35 +410,7 @@ function hideLoading() {
   hide(DOM.loadingSection);
 }
 
-/* ── Interstitial Ad ─────────────────────────── */
-function showInterstitial(result, isDemo) {
-  hideLoading();
-  hide(DOM.setupSection);
-  hide(DOM.heroSection);
-  show(DOM.interstitialAd);
 
-  let timeLeft = 5;
-  DOM.adCountdown.textContent = `0${timeLeft}`;
-  DOM.btnSkipAd.textContent = 'Wait...';
-  DOM.btnSkipAd.disabled = true;
-
-  const interval = setInterval(() => {
-    timeLeft--;
-    DOM.adCountdown.textContent = `0${timeLeft}`;
-    if (timeLeft <= 0) {
-      clearInterval(interval);
-      DOM.btnSkipAd.disabled = false;
-      DOM.btnSkipAd.textContent = 'Continue to analysis →';
-    }
-  }, 1000);
-
-  DOM.btnSkipAd.onclick = () => {
-    if (timeLeft > 0) return;
-    clearInterval(interval);
-    hide(DOM.interstitialAd);
-    renderResults(result, isDemo);
-  };
-}
 
 /* ── Error Toast ─────────────────────────────── */
 function showError(msg) {
