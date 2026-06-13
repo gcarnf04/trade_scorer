@@ -19,8 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-
-
+  <script src="js/lang.js"></script>
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -45,11 +44,15 @@
           <span class="logo-badge">Beta</span>
         </div>
       </div>
-      <div class="header-right">
+      <div class="header-right" style="display:flex; align-items:center; gap:8px;">
+        <select class="lang-select btn-ghost btn-sm" style="background:var(--bg-2); border-color:var(--border-light); color:var(--text-1); font-size:12px; padding:4px 8px; border-radius:var(--radius-sm);">
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+        </select>
         <!-- Vault UI mapped to existing app.js logic via 'btnOpenSetup' -->
         <button class="btn-ghost btn-sm" id="btnOpenSetup" style="display:flex; align-items:center; gap:6px;">
           <span class="status-dot" id="keyStatusDot"></span>
-          <span id="keyStatusLabel">No API Key</span>
+          <span id="keyStatusLabel" data-en="No API Key" data-es="Sin clave API">No API Key</span>
         </button>
       </div>
     </div>

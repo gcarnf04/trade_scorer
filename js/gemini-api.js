@@ -8,7 +8,13 @@ const GeminiAPI = (() => {
   const MODEL = 'gemini-2.5-flash-lite';
   const BASE   = 'https://generativelanguage.googleapis.com/v1beta/models';
 
-  const SYSTEM_PROMPT = `You are a ruthless Risk Manager at a top-tier hedge fund. Your job is to evaluate a trader's setup before they execute it. You detect emotional biases (FOMO, revenge trading, overconfidence, anchoring) and assess technical soundness.
+  function getSystemPrompt(lang) {
+    const isEs = lang === 'es';
+    const langRule = isEs
+      ? 'RESPOND ENTIRELY IN SPANISH (en Español). Your verdict, uncomfortable questions, and summary_line must be written entirely in Spanish.'
+      : 'RESPOND ENTIRELY IN ENGLISH. Your verdict, uncomfortable questions, and summary_line must be written entirely in English.';
+
+    return `You are a ruthless Risk Manager at a top-tier hedge fund. Your job is to evaluate a trader's setup before they execute it. You detect emotional biases (FOMO, revenge trading, overconfidence, anchoring) and assess technical soundness.
 
 You MUST respond ONLY with a valid JSON object. No markdown, no prose outside JSON.
 
@@ -16,7 +22,7 @@ JSON structure:
 {
   "score": <integer 0-100>,
   "grade": "<string: ABORTED|HIGH RISK|MODERATE RISK|ACCEPTABLE|CLEAN SETUP>",
-  "verdict": "<2-3 sentence blunt assessment, max 80 words, in the language the trader used>",
+  "verdict": "<2-3 sentence blunt assessment, max 80 words, in the specified language>",
   "dimensions": {
     "risk_management": <integer 0-100>,
     "emotional_control": <integer 0-100>,
@@ -24,12 +30,12 @@ JSON structure:
     "context_awareness": <integer 0-100>
   },
   "questions": [
-    "<uncomfortable question 1, in same language as trader>",
-    "<uncomfortable question 2, in same language as trader>",
-    "<uncomfortable question 3, in same language as trader>"
+    "<uncomfortable question 1, in specified language>",
+    "<uncomfortable question 2, in specified language>",
+    "<uncomfortable question 3, in specified language>"
   ],
   "biases_detected": ["<bias1>", "<bias2>"],
-  "summary_line": "<max 10 words summarizing the setup for history log>"
+  "summary_line": "<max 10 words summarizing the setup for history log, in specified language>"
 }
 
 Scoring criteria:
@@ -42,7 +48,8 @@ Scoring criteria:
 Risk:Reward below 1:2 MUST lower risk_management by at least 20 points.
 FOMO language ("don't want to miss", "no quiero quedarme fuera", "está subiendo") MUST lower emotional_control below 50.
 Revenge trading language ("recuperar", "recover", "get back") MUST lower emotional_control below 30.
-RESPOND ENTIRELY IN ENGLISH.`;
+${langRule}`;
+  }
 
   async function evaluate(traderText, rrRatio, apiKey) {
     let userContent = `TRADE SETUP TO EVALUATE:\n\n"${traderText}"`;
@@ -53,11 +60,12 @@ RESPOND ENTIRELY IN ENGLISH.`;
       }
     }
 
+    const currentLang = typeof Lang !== 'undefined' ? Lang.get() : 'en';
     const url = `${BASE}/${MODEL}:generateContent?key=${apiKey}`;
 
     const body = {
       system_instruction: {
-        parts: [{ text: SYSTEM_PROMPT }],
+        parts: [{ text: getSystemPrompt(currentLang) }],
       },
       contents: [
         {

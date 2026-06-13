@@ -74,6 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
   DOM.modalPinInputs  = [...document.querySelectorAll('#setupModal .pin-input')];
   DOM.loginPinInputs  = [...document.querySelectorAll('#loginModal .pin-input')];
 
+  const langSelect = document.querySelector('.lang-select');
+  if (langSelect) {
+    langSelect.value = Lang.get();
+    langSelect.addEventListener('change', (e) => {
+      Lang.set(e.target.value);
+    });
+  }
+  window.addEventListener('langchange', () => {
+    updateKeyStatus();
+  });
+
   initPinInputs(DOM.modalPinInputs);
   initPinInputs(DOM.loginPinInputs);
   bindEvents();
@@ -83,21 +94,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* ── API Key Status ──────────────────────────── */
 function updateKeyStatus() {
+  const lang = Lang.get();
   if (Storage.isUnlocked()) {
     State.apiKey = Storage.getUnlockedKey();
     DOM.keyStatusDot.className = 'status-dot active';
-    DOM.keyStatusLabel.textContent = 'API Key loaded';
+    DOM.keyStatusLabel.textContent = lang === 'es' ? 'Clave API activa' : 'API Key loaded';
     DOM.btnEvaluate.disabled = !DOM.tradeText?.value?.trim();
   } else if (Storage.hasStoredKey()) {
     State.apiKey = null;
     DOM.keyStatusDot.className = 'status-dot';
-    DOM.keyStatusLabel.textContent = 'Key saved — unlock';
+    DOM.keyStatusLabel.textContent = lang === 'es' ? 'Clave guardada — desbloquear' : 'Key saved — unlock';
     DOM.btnEvaluate.disabled = true;
     openLoginModal();
   } else {
     State.apiKey = null;
     DOM.keyStatusDot.className = 'status-dot error';
-    DOM.keyStatusLabel.textContent = 'No API Key';
+    DOM.keyStatusLabel.textContent = lang === 'es' ? 'Sin clave API' : 'No API Key';
     DOM.btnEvaluate.disabled = true;
   }
 }
