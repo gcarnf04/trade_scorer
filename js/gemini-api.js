@@ -49,9 +49,7 @@ Risk:Reward below 1:2 MUST lower risk_management by at least 20 points.
 FOMO language ("don't want to miss", "no quiero quedarme fuera", "está subiendo") MUST lower emotional_control below 50.
 Revenge trading language ("recuperar", "recover", "get back") MUST lower emotional_control below 30.
 ${langRule}`;
-  }
-
-  async function evaluate(traderText, rrRatio, apiKey) {
+  }  async function evaluate(traderText, rrRatio, apiKey) {
     let userContent = `TRADE SETUP TO EVALUATE:\n\n"${traderText}"`;
     if (rrRatio !== null && rrRatio !== undefined) {
       userContent += `\n\nCalculated Risk:Reward Ratio: 1:${rrRatio.toFixed(2)}`;
@@ -61,7 +59,6 @@ ${langRule}`;
     }
 
     const currentLang = typeof Lang !== 'undefined' ? Lang.get() : 'en';
-    const url = `${BASE}/${MODEL}:generateContent?key=${apiKey}`;
 
     const body = {
       system_instruction: {
@@ -80,33 +77,52 @@ ${langRule}`;
       },
     };
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+    const models = ['gemini-2.5-flash-lite', 'gemini-2.5-flash', 'gemini-3.5-flash', 'gemini-3-flash', 'gemini-3.1-flash-lite'];
+    let lastError = null;
 
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      const msg = err?.error?.message || `HTTP ${response.status}`;
-      throw new Error(categorizeError(response.status, msg));
+    for (const modelName of models) {
+      try {
+        const url = `${BASE}/${modelName}:generateContent?key=${apiKey}`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          const msg = err?.error?.message || `HTTP ${response.status}`;
+          lastError = new Error(categorizeError(response.status, msg));
+          if (response.status === 429) {
+            console.warn(`[Quota Exhausted] ${modelName} returned 429. Falling back...`);
+            continue;
+          }
+          throw lastError;
+        }
+
+        const data = await response.json();
+        const raw  = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!raw) throw new Error('Empty response from Gemini. Check your API Key.');
+
+        try {
+          return JSON.parse(raw);
+        } catch {
+          const match = raw.match(/\{[\s\S]*\}/);
+          if (match) return JSON.parse(match[0]);
+          throw new Error('Gemini response is not valid JSON.');
+        }
+
+      } catch (err) {
+        lastError = err;
+        if (err.status === 429 || (err.message && err.message.includes('429')) || (err.message && err.message.toLowerCase().includes('quota'))) {
+          continue; // Try next model
+        }
+        throw err;
+      }
     }
-
-    const data = await response.json();
-    const raw  = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!raw) throw new Error('Empty response from Gemini. Check your API Key.');
-
-    try {
-      return JSON.parse(raw);
-    } catch {
-      // Try to extract JSON from the text if Gemini added prose
-      const match = raw.match(/\{[\s\S]*\}/);
-      if (match) return JSON.parse(match[0]);
-      throw new Error('Gemini response is not valid JSON.');
-    }
+    throw lastError || new Error("All fallback models exhausted due to rate limit/quota.");
   }
-
   function categorizeError(status, msg) {
     if (status === 400) return 'Invalid API Key or bad request. Verify your Gemini API Key.';
     if (status === 403) return 'Access denied. Verify that your Gemini API Key has permissions.';
